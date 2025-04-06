@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saturday Schedule Generator</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="manifest" href="./manifest.json">
+</head>
+<body>
+
+        <div class="container">
+            <h1>Saturday Schedule Generator</h1>
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" />
+            <button id="generate-schedule">Generate Schedule</button>
+            <button id="submit-schedule">Submit Schedule</button>
+            <!-- Add this button below the "Submit Schedule" button -->
+            <button onclick="window.location.href='tracker.html'">View Tracker</button>
+            <button onclick="window.location.href='history.html'">View History</button>       
+            <h2>Generated Schedule</h2>
+            <div id="schedule-output"></div>
+        </div>
+        <script>
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker
+                    .register("./service-worker.js")
+                    .then(() => console.log("Service Worker Registered"))
+                    .catch((err) => console.error("Service Worker Registration Failed:", err));
+            }
+        </script>
+    </div>
+    
+    <script src="scripts/app.js"></script>
+</body>
+</html>

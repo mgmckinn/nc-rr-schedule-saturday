@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Schedule History</title>
+        <link rel="stylesheet" href="styles/style.css">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Arial', sans-serif;
+                background: linear-gradient(to right, #003366, #00509e);
+                /* Investment Blue gradient */
+                color: #ffd700;
+                /* Attentive Gold */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 800px;
+                text-align: center;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                color: #ffd700;
+                /* Attentive Gold */
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+                /* Black shadow */
+            }
+
+            #history-output {
+                background: rgba(255, 215, 0, 0.2);
+                /* Attentive Gold with transparency */
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                text-align: left;
+                font-size: 1.2rem;
+                color: #ffd700;
+                /* Attentive Gold */
+                overflow-y: auto;
+                max-height: 60vh;
+                /* Prevents overflow */
+            }
+
+            button {
+                background: #ffd700;
+                /* Attentive Gold */
+                color: #003366;
+                /* Investment Blue */
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 1rem;
+                cursor: pointer;
+                margin: 10px 5px;
+                transition: background 0.3s ease, color 0.3s ease;
+            }
+
+            button:hover {
+                background: #003366;
+                /* Investment Blue */
+                color: #ffd700;
+                /* Attentive Gold */
+                border: 1px solid #ffd700;
+                /* Attentive Gold border */
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Schedule History</h1>
+            <div id="history-output"></div>
+            <button id="clear-history">Clear History</button>
+            <button onclick="window.location.href='index.html'">Back to Schedule</button>
+        </div>
+        <script src="scripts/history.js"></script>
+    </body>
+
+</html>

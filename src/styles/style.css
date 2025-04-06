@@ -1,0 +1,118 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #003366, #00509e); /* Investment Blue gradient */
+    color: #ffd700; /* Attentive Gold */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: rgba(255, 215, 0, 0.1); /* Attentive Gold with transparency */
+    border-radius: 10px;
+    padding: 30px 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ffd700; /* Attentive Gold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Black shadow */
+}
+
+label {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #ffd700; /* Attentive Gold */
+}
+
+input[type="date"] {
+    padding: 10px;
+    border: 1px solid #ffd700; /* Attentive Gold border */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+    background-color: #003366; /* Investment Blue background */
+    color: #ffd700; /* Attentive Gold text */
+}
+
+button {
+    background: #ffd700; /* Attentive Gold */
+    color: #003366; /* Investment Blue text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    background: #003366; /* Investment Blue */
+    color: #ffd700; /* Attentive Gold text */
+    border: 1px solid #ffd700; /* Attentive Gold border */
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    color: #ffd700; /* Attentive Gold */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* Black shadow */
+}
+
+#schedule-output, #tracker-output {
+    background: rgba(255, 215, 0, 0.2); /* Attentive Gold with transparency */
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+    text-align: left;
+    font-size: 1rem;
+    color: #ffd700; /* Attentive Gold */
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+    padding: 5px;
+    background: rgba(255, 215, 0, 0.1); /* Attentive Gold with transparency */
+    border-radius: 3px;
+    color: #ffd700; /* Attentive Gold */
+}
+
+p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #ffd700; /* Attentive Gold */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
