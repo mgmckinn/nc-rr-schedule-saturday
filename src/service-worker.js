@@ -1,6 +1,7 @@
 /** @format */
 
 const CACHE_NAME = "schedule-app-cache-v1";
+const CACHE_NAME = "schedule-app-cache-v2"; // Increment the version
 const BASE_PATH = "/nc-rr-schedule-saturday/"; // Adjust this to match your GitHub repository name
 const urlsToCache = [
   `${BASE_PATH}index.html`,
