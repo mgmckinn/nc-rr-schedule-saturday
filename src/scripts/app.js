@@ -52,23 +52,23 @@ function saveTrackerData() {
 // Update the tracker display and save data
 function updateTracker() {
   const trackerOutput = document.getElementById("tracker-output");
-  trackerOutput.innerHTML = `
-        <h3>Workload Tracker</h3>
-        <p><strong>MODs:</strong></p>
-        <ul>
-            ${team.MODs.map(
-              (member) => `<li>${member.name}: ${member.count} shifts</li>`
-            ).join("")}
-        </ul>
-        <p><strong>Fillers:</strong></p>
-        <ul>
-            ${team.fillers
-              .map(
-                (member) => `<li>${member.name}: ${member.count} shifts</li>`
-              )
-              .join("")}
-        </ul>
+  if (trackerOutput) {
+    trackerOutput.innerHTML = `
+      <h3>Workload Tracker</h3>
+      <p><strong>MODs:</strong></p>
+      <ul>
+        ${team.MODs.map(
+          (member) => `<li>${member.name}: ${member.count} shifts</li>`
+        ).join("")}
+      </ul>
+      <p><strong>Fillers:</strong></p>
+      <ul>
+        ${team.fillers
+          .map((member) => `<li>${member.name}: ${member.count} shifts</li>`)
+          .join("")}
+      </ul>
     `;
+  }
   saveTrackerData(); // Save data whenever the tracker is updated
 }
 
@@ -101,11 +101,11 @@ function generateSchedule() {
 
   // Display the schedule
   scheduleOutput.innerHTML = `
-        <p><strong>Date:</strong> ${selectedDate.toDateString()}</p>
-        <p><strong>MOD:</strong> ${tempSchedule.MODs.join(", ")}</p>
-        <p><strong>Fillers:</strong> ${tempSchedule.fillers.join(", ")}</p>
-        <p><em>Click "Submit Schedule" to confirm this schedule.</em></p>
-    `;
+    <p><strong>Date:</strong> ${selectedDate.toDateString()}</p>
+    <p><strong>MOD:</strong> ${tempSchedule.MODs.join(", ")}</p>
+    <p><strong>Fillers:</strong> ${tempSchedule.fillers.join(", ")}</p>
+    <p><em>Click "Submit Schedule" to confirm this schedule.</em></p>
+  `;
 }
 
 // Function to confirm the schedule and update counts
@@ -128,13 +128,26 @@ function confirmSchedule() {
     }
   });
 
+  // Save updated tracker data to localStorage
+  saveTrackerData();
+
+  // Save the schedule to history
+  const scheduleHistory =
+    JSON.parse(localStorage.getItem("scheduleHistory")) || [];
+  scheduleHistory.push({
+    date: new Date().toLocaleDateString(),
+    MODs: tempSchedule.MODs,
+    fillers: tempSchedule.fillers,
+  });
+  localStorage.setItem("scheduleHistory", JSON.stringify(scheduleHistory));
+
   // Clear the temporary schedule
   tempSchedule = { MODs: [], fillers: [] };
 
   // Display confirmation message
   document.getElementById("schedule-output").innerHTML = `
-        <p>Schedule confirmed and counts updated!</p>
-    `;
+    <p>Schedule confirmed and counts updated!</p>
+  `;
 
   // Update the tracker display
   updateTracker();
@@ -154,90 +167,51 @@ document
   .getElementById("submit-schedule")
   .addEventListener("click", confirmSchedule);
 
+  function generateSchedule() {
+    console.log("Generate Schedule button clicked"); // Debugging
+
+    const dateInput = document.getElementById("date").value;
+    console.log("Selected date:", dateInput); // Debugging
+
+    const scheduleOutput = document.getElementById("schedule-output");
+
+    if (!dateInput) {
+      scheduleOutput.innerHTML = "<p>Please select a date.</p>";
+      return;
+    }
+
+    const selectedDate = new Date(dateInput);
+    const dayOfMonth = selectedDate.getDate();
+
+    console.log("Day of the month:", dayOfMonth); // Debugging
+
+    // Determine the number of people needed
+    const isBusySaturday = dayOfMonth >= 1 && dayOfMonth <= 3;
+    const numFillers = isBusySaturday ? 4 : 3;
+    const numMODs = 1;
+
+    console.log("Number of MODs:", numMODs, "Number of Fillers:", numFillers); // Debugging
+
+    // Select MODs and fillers with the least assignments
+    tempSchedule.MODs = team.MODs.sort((a, b) => a.count - b.count)
+      .slice(0, numMODs)
+      .map((member) => member.name);
+    tempSchedule.fillers = team.fillers
+      .sort((a, b) => a.count - b.count)
+      .slice(0, numFillers)
+      .map((member) => member.name);
+
+    console.log("Selected MODs:", tempSchedule.MODs); // Debugging
+    console.log("Selected Fillers:", tempSchedule.fillers); // Debugging
+
+    // Display the schedule
+    scheduleOutput.innerHTML = `
+        <p><strong>Date:</strong> ${selectedDate.toDateString()}</p>
+        <p><strong>MOD:</strong> ${tempSchedule.MODs.join(", ")}</p>
+        <p><strong>Fillers:</strong> ${tempSchedule.fillers.join(", ")}</p>
+        <p><em>Click "Submit Schedule" to confirm this schedule.</em></p>
+    `;
+  }
+
 // Initialize the app
 initializeApp();
- function confirmSchedule() {
-   if (!tempSchedule.MODs.length || !tempSchedule.fillers.length) {
-     alert("No schedule to confirm. Please generate a schedule first.");
-     return;
-   }
-
-   // Update the counts for the selected MODs and fillers
-   team.MODs.forEach((member) => {
-     if (tempSchedule.MODs.includes(member.name)) {
-       member.count++;
-     }
-   });
-
-   team.fillers.forEach((member) => {
-     if (tempSchedule.fillers.includes(member.name)) {
-       member.count++;
-     }
-   });
-
-   // Save updated tracker data to localStorage
-   saveTrackerData();
-
-   // Clear the temporary schedule
-   tempSchedule = { MODs: [], fillers: [] };
-
-   // Display confirmation message
-   document.getElementById("schedule-output").innerHTML = `
-        <p>Schedule confirmed and counts updated!</p>
-    `;
-
-   // Update the tracker display
-   updateTracker();
- }
-
- // Save tracker data to localStorage
- function saveTrackerData() {
-   const trackerData = {
-     MODs: team.MODs,
-     fillers: team.fillers,
-   };
-   localStorage.setItem("trackerData", JSON.stringify(trackerData));
- }
- function confirmSchedule() {
-   if (!tempSchedule.MODs.length || !tempSchedule.fillers.length) {
-     alert("No schedule to confirm. Please generate a schedule first.");
-     return;
-   }
-
-   // Update the counts for the selected MODs and fillers
-   team.MODs.forEach((member) => {
-     if (tempSchedule.MODs.includes(member.name)) {
-       member.count++;
-     }
-   });
-
-   team.fillers.forEach((member) => {
-     if (tempSchedule.fillers.includes(member.name)) {
-       member.count++;
-     }
-   });
-
-   // Save updated tracker data to localStorage
-   saveTrackerData();
-
-   // Save the schedule to history
-   const scheduleHistory =
-     JSON.parse(localStorage.getItem("scheduleHistory")) || [];
-   scheduleHistory.push({
-     date: new Date().toLocaleDateString(),
-     MODs: tempSchedule.MODs,
-     fillers: tempSchedule.fillers,
-   });
-   localStorage.setItem("scheduleHistory", JSON.stringify(scheduleHistory));
-
-   // Clear the temporary schedule
-   tempSchedule = { MODs: [], fillers: [] };
-
-   // Display confirmation message
-   document.getElementById("schedule-output").innerHTML = `
-        <p>Schedule confirmed and counts updated!</p>
-    `;
-
-   // Update the tracker display
-   updateTracker();
- }
